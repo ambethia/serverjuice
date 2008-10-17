@@ -24,3 +24,29 @@ This will ssh as root to mycoolserver.com and run the generated script.
 
 I wrote this for Rails Rumble 2008 to save me some time on server setup.
 There is a lot more that this script could do, but for now this is all I need.
+
+Why would I write something like this when there are tools like deprec and
+sprinkle?
+
+There are a few reasons why I prefer this approach:
+
+a) Transparency: Instead of running a tool locally that goes off and does
+   various things on a server, you get a complete shell script that does
+   the entire setup in one run. You can inspect the script, modify it, pick
+   out parts of it, do anything you like with it before you actually run it.
+
+b) Clarity: Because I rarely do slice deployment and system maintenance, it's
+   important that I can refer back to what the setup process did a year later
+   when I need to change something. Instead of having to read through the
+   code of a tool to figure out exactly what it did when I ran it, I can just
+   keep the deploy script and refer to it later on, or even re-run parts of it
+   as I see fit.
+
+c) I wrote this as a personal exercise to get more familiar with slice
+   deployment and to brush up on my system administration skills. Automating
+   something that you would normally do by hand is a great way to learn more
+   about it.
+
+This tool is open source and you are welcome to modify it, add to it, fork it,
+play with it, and so on. Feel free to send me any improvements you make and
+I'll incorporate them.
