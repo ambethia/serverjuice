@@ -49,8 +49,9 @@ if ARGV.size != 1 || opts.error?
 end
 
 desired_hostname = ARGV.shift
+mysql_password = ARGV.shift
 
-juicer = ServerJuice.new(SCRIPT_NAME, target_server, desired_hostname)
+juicer = ServerJuice.new(SCRIPT_NAME, target_server, desired_hostname, mysql_password)
 if target_server
   juicer.deploy
 else

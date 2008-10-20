@@ -14,7 +14,7 @@ end
 class ServerJuiceTest < Test::Unit::TestCase
   context "Default generated script" do
     setup do
-      @script = ServerJuice.new('test_juicer', 'example.com', 'tasty').generate
+      @script = ServerJuice.new('test_juicer', 'example.com', 'tasty', "mysql_password").generate
 
       @generated = @script.split(/\n\n/).chomp_last!
 
@@ -61,11 +61,24 @@ apt-get -y install apache2 apache2-prefork-dev
 # Install MySQL Server
 apt-get -y install mysql-server mysql-client libmysqlclient15-dev
 
+# set a root password
+mysqladmin -u root password "mysql_password"
+
 # Install Git
 apt-get -y install git-core
 
 # Install Core Ruby
-apt-get -y install ruby-full
+# apt-get -y install ruby-full
+
+# Install more secure version of ruy
+wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.6-p287.tar.gz
+tar xvfz ruby-1.8.6-p287.tar.gz 
+cd ruby-1.8.6-p287
+./configure && make && make install
+cd ..
+
+#clean up
+rm -rf ruby-1.8.6-p287
 
 # Install RubyGems
 (
