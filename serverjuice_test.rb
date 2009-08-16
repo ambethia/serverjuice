@@ -29,7 +29,7 @@ class ServerJuiceTest < Test::Unit::TestCase
 #
 # More info:
 #
-# http://github.com/sansdev/serverjuice
+# http://github.com/hartcode/serverjuice
 #
 
 # Configure your desired options here
