@@ -31,11 +31,11 @@ EOF
     <<-EOF
 # #{remote_script_name}:
 #
-# Set up a clean Ubuntu 8.04 install for Rails production deployment.
+# Set up a clean Ubuntu install for Rails production deployment.
 #
 # Tested on:
 #
-# linode.com - Ubuntu 8.04 LTS
+# linode.com - Ubuntu 9.04
 #
 # More info:
 #

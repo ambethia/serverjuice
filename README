@@ -1,7 +1,7 @@
 This is a little mini tool to assist with the initial configuration of an
-Ubuntu 8.04 VPS for Rails deployment using Passenger, Apache 2 and MySQL.
+Ubuntu VPS for Rails deployment using Passenger, Apache 2 and MySQL.
 
-It has been tested on a linode.com VPS with their Ubuntu 8.04 distribution.
+It has been tested on a linode.com VPS with their Ubuntu 9.04 distribution.
 
 To use it, first clone the git repository:
 
