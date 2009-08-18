@@ -12,6 +12,10 @@ Then run the command with the hostname you wish to configure your VPS with:
 
   ./serverjuice totallyninja >serverjuice.sh
 
+Optionally you can also specify a mysql root password:
+
+  ./serverjuice totallyninja sosecure >serverjuice.sh
+
 
 The tool simply generates a shell script on standard out. The safest way to
 use the output is to collect it in a file and copy it to your blank server
@@ -48,5 +52,14 @@ b) Clarity: Because I rarely do slice deployment and system maintenance, it's
 
 
 This tool is open source and you are welcome to modify it, add to it, fork it,
-play with it, and so on. Feel free to send me any improvements you make and
-I'll incorporate them.
+play with it, and so on. Feel free to send me any improvements you make.
+
+
+Author:
+
+    Daniel Aborg
+
+
+Contributors:
+
+    Dan Pickett     - mysql root password and newer ruby version

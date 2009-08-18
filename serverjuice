@@ -14,7 +14,7 @@ SCRIPT_NAME = "serverjuice"
 
 def print_usage
   puts <<EOS
-Usage: #{SCRIPT_NAME} [OPTION] HOSTNAME
+Usage: #{SCRIPT_NAME} [OPTIONS] HOSTNAME [MYSQL PASSWORD]
 
 HOSTNAME: The desired hostname for the target server.
 
@@ -42,7 +42,7 @@ begin
 rescue
 end
 
-if ARGV.size != 1 || opts.error?
+if ARGV.size < 1 || opts.error?
   puts "#{$0}: no hostname specified" unless opts.error?
   print_usage
   exit 1
