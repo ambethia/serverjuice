@@ -77,18 +77,18 @@ mysqladmin -u root password "#{@mysql_password}"
 # Install Git
 apt-get -y install git-core
 
-# Install Core Ruby
-# apt-get -y install ruby-full
-
-# Install more secure version of ruy
-wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.6-p287.tar.gz
-tar xvfz ruby-1.8.6-p287.tar.gz 
-cd ruby-1.8.6-p287
-./configure && make && make install
-cd ..
-
-#clean up
-rm -rf ruby-1.8.6-p287
+# Install more secure version of ruby
+(
+RUBY=ruby-1.8.6-p383 &&
+wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/$RUBY.tar.gz &&
+tar xvfz $RUBY.tar.gz &&
+cd $RUBY &&
+./configure &&
+make &&
+make install &&
+cd .. &&
+rm -rf $RUBY $RUBY.tar.gz
+)
 
 # Install RubyGems
 (
