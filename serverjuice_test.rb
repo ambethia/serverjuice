@@ -82,11 +82,11 @@ rm -rf $RUBY $RUBY.tar.gz
 
 # Install RubyGems
 (
-RUBYGEMS=rubygems-1.3.0 &&
+RUBYGEMS=rubygems-1.3.5 &&
 cd /usr/local/src &&
 rm -rf $RUBYGEMS $RUBYGEMS.tgz &&
 # Note: Filename in URL does not determine which file to download
-wget http://rubyforge.org/frs/download.php/43985/rubygems-1.3.0.tgz &&
+wget http://rubyforge.org/frs/download.php/60718/rubygems-1.3.5.tgz &&
 tar -xzf $RUBYGEMS.tgz &&
 cd $RUBYGEMS &&
 ruby setup.rb $RDOC $RI &&
