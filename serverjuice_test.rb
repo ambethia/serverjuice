@@ -4,103 +4,41 @@ require 'shoulda'
 
 require 'serverjuice'
 
-class Array
-  def chomp_last!
-    last.chomp!
-    self
-  end
-end
-
 class ServerJuiceTest < Test::Unit::TestCase
-  context "Default generated script" do
+  context "Generated script" do
     setup do
-      @script = ServerJuice.new('test_juicer', 'example.com', 'tasty', "mysql_password").generate
+      script = ServerJuice.new('test_juicer', 'example.com', 'tasty', "mysql_password").generate
 
-      @generated = @script.split(/\n\n/).chomp_last!
+      @sections = script.split(/\n\n/)
+      @sections.last.chomp!
+    end
 
-      @expected = <<EOS.split(/\n\n/).chomp_last!
-# test_juicer.sh:
-#
-# Set up a clean Ubuntu 8.04 install for Rails production deployment.
-#
-# Tested on:
-#
-# linode.com - Ubuntu 8.04 LTS
-#
-# More info:
-#
-# http://github.com/hartcode/serverjuice
-#
+    should "inject script name in header" do
+      assert_equal '# test_juicer.sh:', @sections[0].split(/\n/)[0]
+    end
 
-# Configure your desired options here
-DESIRED_HOSTNAME="tasty"
-RI="--no-ri"                         # Comment to install ri
-RDOC="--no-rdoc"                     # Comment to install RDOC
+    should "inject hostname in setup variables" do
+      assert_equal 'DESIRED_HOSTNAME="tasty"', @sections[1].split(/\n/).grep(/DESIRED_HOSTNAME/).first
+    end
 
-# Ensure hostname is configured
-if [ -z "$DESIRED_HOSTNAME" ]; then
-	echo DESIRED_HOSTNAME must be set.
-	exit 1
-fi
-
+    should "use temp file to configure /etc/hosts" do
+      assert_equal <<EOS.chomp, @sections[3]
 # Set hostname
 echo "$DESIRED_HOSTNAME" >/etc/hostname
 sed -re "s/^(127.0.1.1[[:space:]]+).*/\\1$DESIRED_HOSTNAME/" </etc/hosts >"test_juicer.tmp" && cp -f "test_juicer.tmp" /etc/hosts && rm -f "test_juicer.tmp"
 /etc/init.d/hostname.sh start
+EOS
+    end
 
-# Upgrade system packages
-apt-get -y update
-apt-get -y upgrade
-
-# Install essential tools
-apt-get -y install build-essential wget
-
-# Install Apache 2
-apt-get -y install apache2 apache2-prefork-dev
-
-# Install MySQL Server
-apt-get -y install mysql-server mysql-client libmysqlclient15-dev
-
+    should "set the mysql root password" do
+      assert_equal <<EOS.chomp, @sections[8]
 # set a root password
 mysqladmin -u root password "mysql_password"
+EOS
+    end
 
-# Install Git
-apt-get -y install git-core
-
-# Install more secure version of ruby
-(
-RUBY=ruby-1.8.6-p383 &&
-wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/$RUBY.tar.gz &&
-tar xvfz $RUBY.tar.gz &&
-cd $RUBY &&
-./configure &&
-make &&
-make install &&
-cd .. &&
-rm -rf $RUBY $RUBY.tar.gz
-)
-
-# Install RubyGems
-(
-RUBYGEMS=rubygems-1.3.5 &&
-cd /usr/local/src &&
-rm -rf $RUBYGEMS $RUBYGEMS.tgz &&
-# Note: Filename in URL does not determine which file to download
-wget http://rubyforge.org/frs/download.php/60718/rubygems-1.3.5.tgz &&
-tar -xzf $RUBYGEMS.tgz &&
-cd $RUBYGEMS &&
-ruby setup.rb $RDOC $RI &&
-ln -sf /usr/bin/gem1.8 /usr/bin/gem &&
-cd .. &&
-rm -rf $RUBYGEMS $RUBYGEMS.tgz
-)
-
-# Install Rails
-gem install $RDOC $RI rails
-
-# Install MySQL Ruby driver
-gem install $RDOC $RI mysql
-
+    should "use temp file to configure passenger" do
+      assert_equal <<EOS.chomp, @sections[14]
 # Install and setup Passenger
 gem install $RDOC $RI passenger
 (echo; echo) | passenger-install-apache2-module | tee "test_juicer.tmp"
@@ -108,12 +46,6 @@ cat "test_juicer.tmp" | grep -A10 "The Apache 2 module was successfully installe
 rm "test_juicer.tmp"
 apache2ctl graceful
 EOS
-    end
-
-    should "contain the expected sections" do
-      @expected.each_with_index do |section, i|
-        assert_equal section, @generated[i]
-      end
     end
   end
 end 
