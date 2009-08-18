@@ -44,8 +44,9 @@ EOF
 
 # Configure your desired options here
 DESIRED_HOSTNAME="#{hostname}"
-RI="--no-ri"                         # Comment to install ri
-RDOC="--no-rdoc"                     # Comment to install RDOC
+RUBY=ruby-1.8.6-p383
+RI="--no-ri"                         # Comment out to install ri
+RDOC="--no-rdoc"                     # Comment out to install RDOC
 
 # Ensure hostname is configured
 if [ -z "$DESIRED_HOSTNAME" ]; then
@@ -79,7 +80,6 @@ apt-get -y install git-core
 
 # Install more secure version of ruby
 (
-RUBY=ruby-1.8.6-p383 &&
 wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/$RUBY.tar.gz &&
 tar xvfz $RUBY.tar.gz &&
 cd $RUBY &&
