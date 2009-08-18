@@ -103,12 +103,9 @@ gem install $RDOC $RI mysql
 
 # Install and setup Passenger
 gem install $RDOC $RI passenger
-(echo; echo) | passenger-install-apache2-module
-cat >/etc/apache2/conf.d/passenger <<EOP
-LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.0.3/ext/apache2/mod_passenger.so
-PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.0.3
-PassengerRuby /usr/bin/ruby1.8
-EOP
+(echo; echo) | passenger-install-apache2-module | tee "test_juicer.tmp"
+cat "test_juicer.tmp" | grep -A10 "The Apache 2 module was successfully installed" | egrep "(LoadModule|Passenger(Root|Ruby))" | sed -r $'s:\\e\\\\[[0-9]+m::g' >/etc/apache2/conf.d/passenger
+rm "test_juicer.tmp"
 apache2ctl graceful
 EOS
     end
