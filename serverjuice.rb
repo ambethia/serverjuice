@@ -72,16 +72,21 @@ apt-get -y install apache2 apache2-prefork-dev
 # Install MySQL Server
 apt-get -y install mysql-server mysql-client libmysqlclient15-dev
 
-# set a root password
+# Set MySQL root password
 mysqladmin -u root password "#{@mysql_password}"
 
 # Install Git
 apt-get -y install git-core
 
+# Install libreadline-dev for compiling ruby
+apt-get -y install libreadline-dev
+
 # Install more secure version of ruby
 (
+cd /usr/local/src &&
+rm -rf $RUBY $RUBY.tgz &&
 wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/$RUBY.tar.gz &&
-tar xvfz $RUBY.tar.gz &&
+tar -xzf $RUBY.tar.gz &&
 cd $RUBY &&
 ./configure &&
 make &&
