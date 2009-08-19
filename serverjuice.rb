@@ -42,13 +42,8 @@ EOF
 # http://github.com/hartcode/serverjuice
 #
 
-# Configure your desired options here
-DESIRED_HOSTNAME="#{hostname}"
-RUBY=ruby-1.8.6-p383
-RI="--no-ri"                         # Comment out to install ri
-RDOC="--no-rdoc"                     # Comment out to install RDOC
-
 # Ensure hostname is configured
+DESIRED_HOSTNAME="#{hostname}"
 if [ -z "$DESIRED_HOSTNAME" ]; then
 	echo DESIRED_HOSTNAME must be set.
 	exit 1
@@ -83,6 +78,7 @@ apt-get -y install libreadline-dev
 
 # Install more secure version of ruby
 (
+RUBY=ruby-1.8.6-p383
 cd /usr/local/src &&
 rm -rf $RUBY $RUBY.tgz &&
 wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/$RUBY.tar.gz &&
@@ -95,9 +91,13 @@ cd .. &&
 rm -rf $RUBY $RUBY.tar.gz
 )
 
+# Prevent ri and rdoc from being installed unless commented out
+RI="--no-ri"
+RDOC="--no-rdoc"
+
 # Install RubyGems
 (
-RUBYGEMS=rubygems-1.3.5 &&
+RUBYGEMS=rubygems-1.3.5
 cd /usr/local/src &&
 rm -rf $RUBYGEMS $RUBYGEMS.tgz &&
 # Note: Filename in URL does not determine which file to download

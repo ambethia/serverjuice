@@ -21,8 +21,8 @@ class ServerJuiceTest < Test::Unit::TestCase
       assert_equal 'DESIRED_HOSTNAME="tasty"', @sections[1].split(/\n/).grep(/DESIRED_HOSTNAME/).first
     end
 
-    should "use temp file to configure /etc/hosts" do
-      assert_equal <<EOS.chomp, @sections[3]
+    should "use temp file when configuring /etc/hosts" do
+      assert_equal <<EOS.chomp, @sections[2]
 # Set hostname
 echo "$DESIRED_HOSTNAME" >/etc/hostname
 sed -re "s/^(127.0.1.1[[:space:]]+).*/\\1$DESIRED_HOSTNAME/" </etc/hosts >"test_juicer.tmp" && cp -f "test_juicer.tmp" /etc/hosts && rm -f "test_juicer.tmp"
@@ -31,13 +31,13 @@ EOS
     end
 
     should "set the mysql root password" do
-      assert_equal <<EOS.chomp, @sections[8]
+      assert_equal <<EOS.chomp, @sections[7]
 # Set MySQL root password
 mysqladmin -u root password "mysql_password"
 EOS
     end
 
-    should "use temp file to configure passenger" do
+    should "use temp file when configuring passenger" do
       assert_equal <<EOS.chomp, @sections[15]
 # Install and setup Passenger
 gem install $RDOC $RI passenger
