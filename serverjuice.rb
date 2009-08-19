@@ -87,8 +87,7 @@ cd $RUBY &&
 ./configure &&
 make &&
 make install &&
-cd .. &&
-rm -rf $RUBY $RUBY.tar.gz
+cd ..
 )
 
 # Prevent ri and rdoc from being installed unless commented out
@@ -106,8 +105,7 @@ tar -xzf $RUBYGEMS.tgz &&
 cd $RUBYGEMS &&
 ruby setup.rb $RDOC $RI &&
 ln -sf /usr/bin/gem1.8 /usr/bin/gem &&
-cd .. &&
-rm -rf $RUBYGEMS $RUBYGEMS.tgz
+cd ..
 )
 
 # Install Rails
