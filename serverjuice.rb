@@ -80,7 +80,7 @@ apt-get -y install libreadline-dev
 (
 RUBY=ruby-1.8.6-p383
 cd /usr/local/src &&
-rm -rf $RUBY $RUBY.tgz &&
+rm -rf $RUBY $RUBY.tar.gz &&
 wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/$RUBY.tar.gz &&
 tar -xzf $RUBY.tar.gz &&
 cd $RUBY &&
