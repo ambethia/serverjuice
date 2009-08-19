@@ -32,13 +32,13 @@ EOS
 
     should "set the mysql root password" do
       assert_equal <<EOS.chomp, @sections[8]
-# set a root password
+# Set MySQL root password
 mysqladmin -u root password "mysql_password"
 EOS
     end
 
     should "use temp file to configure passenger" do
-      assert_equal <<EOS.chomp, @sections[14]
+      assert_equal <<EOS.chomp, @sections[15]
 # Install and setup Passenger
 gem install $RDOC $RI passenger
 (echo; echo) | passenger-install-apache2-module | tee "test_juicer.tmp"
