@@ -119,6 +119,65 @@ gem install $RDOC $RI passenger
 cat "#{remote_tmp_file}" | grep -A10 "The Apache 2 module was successfully installed" | egrep "(LoadModule|Passenger(Root|Ruby))" | sed -r $'s:\\e\\\\[[0-9]+m::g' >/etc/apache2/conf.d/passenger
 rm "#{remote_tmp_file}"
 apache2ctl graceful
+
+# Final success message
+cat <<'EOS'
+
+
+
+Congratulations!
+
+ServerJuice has finished juicing up your server with Rails, MySQL and Passenger!
+
+
+Suggested further steps:
+
+1. Depending on your needs, you may want to create a user for deployment.
+
+   Below I'll use "user@#{hostname}.yourhost.com" to talk about the account
+   you'll be using for deployment, whether it be root or another user.
+
+2. Create ssh keys for the deployment user on your server:
+
+   #{hostname}:$ ssh-keygen -t rsa -f ~/.ssh/id_rsa
+
+3. Add the created public key to github to make deploying from github work.
+
+   #{hostname}:$ cat ~/.ssh/id_rsa.pub # then copy'n'paste to github deploy key
+
+4. Create ssh keys on your development machine and add to your server:
+
+   $ ssh-keygen -t rsa -f ~/.ssh/id_rsa
+   $ ssh user@#{hostname}.yourhost.com "cat >>~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys" <~/.ssh/id_rsa.pub
+
+5. Capify your app and set it up to deploy to your new server.
+
+   If deploying from github, remember to put "default_run_options[:pty] = true"
+   in your deploy recipe to avoid host key verification errors.
+
+6. Once you've deployed, configure Apache to be aware of your Passenger app:
+
+   <VirtualHost *:80>
+      ServerName #{hostname}.yourhost.com
+      DocumentRoot /var/www/your-app/current/public
+   </VirtualHost
+
+   Be sure to point to "public" in your Rails app!
+
+   To restart your Passenger app, touch tmp/restart.txt in the app's directory.
+
+
+Links to more information:
+
+Passenger User's Guide With Apache:
+    http://www.modrails.com/documentation/Users%20guide%20Apache.html
+
+GitHub - Deploying with Capistrano:
+    http://github.com/guides/deploying-with-capistrano
+
+
+Good luck and remember to have fun!
+EOS
     EOF
   end
 end
