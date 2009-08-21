@@ -107,14 +107,28 @@ ruby setup.rb $RDOC $RI &&
 cd ..
 )
 
+# Put a default .gemrc in place
+cat >> ~/.gemrc <<'EOS'
+--- 
+:backtrace: false
+:benchmark: false
+:bulk_threshold: 1000
+:sources: 
+- http://gems.rubyforge.org
+- http://gems.github.com
+:update_sources: true
+:verbose: true
+gem: $RDOC $RI
+EOS
+
 # Install Rails
-gem install $RDOC $RI rails
+gem install rails
 
 # Install MySQL Ruby driver
-gem install $RDOC $RI mysql
+gem install mysql
 
 # Install and setup Passenger
-gem install $RDOC $RI passenger
+gem install passenger
 (echo; echo) | passenger-install-apache2-module | tee "#{remote_tmp_file}"
 cat "#{remote_tmp_file}" | grep -A10 "The Apache 2 module was successfully installed" | egrep "(LoadModule|Passenger(Root|Ruby))" | sed -r $'s:\\e\\\\[[0-9]+m::g' >/etc/apache2/conf.d/passenger
 rm "#{remote_tmp_file}"

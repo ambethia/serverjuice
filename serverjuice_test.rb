@@ -38,7 +38,7 @@ EOS
     end
 
     should "use temp file when configuring passenger" do
-      assert_equal <<EOS.chomp, @sections[15]
+      assert_equal <<EOS.chomp, @sections[16]
 # Install and setup Passenger
 gem install $RDOC $RI passenger
 (echo; echo) | passenger-install-apache2-module | tee "test_juicer.tmp"
