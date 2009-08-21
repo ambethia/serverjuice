@@ -78,7 +78,7 @@ apt-get -y install libreadline-dev
 
 # Install more secure version of ruby
 (
-RUBY=ruby-1.8.6-p383
+RUBY=ruby-1.8.7-p174
 cd /usr/local/src &&
 rm -rf $RUBY $RUBY.tar.gz &&
 wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/$RUBY.tar.gz &&
