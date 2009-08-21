@@ -63,3 +63,4 @@ Author:
 Contributors:
 
     Dan Pickett     - mysql root password and newer ruby version
+    Jason L Perry   - ~/.gemrc and even newer ruby version
