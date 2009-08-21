@@ -40,7 +40,7 @@ EOS
     should "use temp file when configuring passenger" do
       assert_equal <<EOS.chomp, @sections[16]
 # Install and setup Passenger
-gem install $RDOC $RI passenger
+gem install passenger
 (echo; echo) | passenger-install-apache2-module | tee "test_juicer.tmp"
 cat "test_juicer.tmp" | grep -A10 "The Apache 2 module was successfully installed" | egrep "(LoadModule|Passenger(Root|Ruby))" | sed -r $'s:\\e\\\\[[0-9]+m::g' >/etc/apache2/conf.d/passenger
 rm "test_juicer.tmp"

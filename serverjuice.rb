@@ -108,7 +108,7 @@ cd ..
 )
 
 # Put a default .gemrc in place
-cat >> ~/.gemrc <<'EOS'
+cat >> ~/.gemrc <<EOS
 --- 
 :backtrace: false
 :benchmark: false
