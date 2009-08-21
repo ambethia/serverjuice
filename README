@@ -6,7 +6,7 @@ It has been tested on a linode.com VPS with their Ubuntu 9.04 distribution.
 
 To use it, first clone the git repository:
 
-  git clone git://github.com/sansdev/serverjuice.git
+  git clone git://github.com/hartcode/serverjuice.git
 
 Then run the command with the hostname you wish to configure your VPS with:
 
